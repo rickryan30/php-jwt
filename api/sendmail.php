@@ -20,15 +20,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   
 $data = json_decode(file_get_contents("php://input"));
 
-$maileremail = $data->maileremail;
-$mailername = $data->mailername;
-$mailarea = $data->mailarea;
+// $maileremail = $data->maileremail;
+// $mailername = $data->mailername;
+// $mailarea = $data->mailarea;
     
 $to = "rickryan29.rr@gmail.com"; // this is your Email address
-$from = $maileremail; // this is the sender's Email address
-$name = $mailername;
+$from = $data->maileremail; // this is the sender's Email address
+$name = $data->mailername;
 $subject = "Rick Ryan Website Email";
-$message = $name . "\n" . "Wrote the following:" . "\n\n" . $mailarea;
+$message = $name . "\n" . "Wrote the following:" . "\n\n" . $data->mailarea;
 
 $headers = "From:" . $from;
 $send = mail($to,$subject,$message,$headers);
@@ -38,11 +38,9 @@ if( $send == true ) {
   echo json_encode(array(
           "success" => true
       ));
-        return false;
-}else {
+}else {g
   echo json_encode(array(
           "success" => false
       ));
-        return false;
 }
 ?>
