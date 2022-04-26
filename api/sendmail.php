@@ -38,7 +38,7 @@ if( $send == true ) {
   echo json_encode(array(
           "success" => true
       ));
-}else {g
+}else {
   echo json_encode(array(
           "success" => false
       ));
