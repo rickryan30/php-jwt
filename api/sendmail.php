@@ -35,11 +35,13 @@ $send = mail($to,$subject,$message,$headers);
 // echo "Mail Sent. Thank you " . $name . ", we will contact you shortly.";
 
 if( $send == true ) {
+  http_response_code(200);
   echo json_encode(array(
           "success" => true
       ));
         return false;
 }else {
+  http_response_code(400);
   echo json_encode(array(
           "success" => false
       ));
