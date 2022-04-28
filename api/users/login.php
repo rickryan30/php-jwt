@@ -46,11 +46,11 @@ $user->email = $data->email;
 $email_exists = $user->emailExists();
 
 // get jwt
-$secretKey=isset($data->key) ? $data->key : "";
+$secret=isset($data->secretKey) ? $data->secretKey : "";
  
 // check if email exists and if password is correct
 
-    if($email_exists && password_verify($data->password, $user->password) && $secretKey == $key){
+    if($email_exists && password_verify($data->password, $user->password) && password_verify($secret, $secretKey)){
     
         $token = array(
         "key" => $key,

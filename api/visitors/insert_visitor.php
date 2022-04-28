@@ -31,7 +31,7 @@ include_once '../vendor/firebase/php-jwt/src/JWT.php';
 require "../vendor/autoload.php";
 use \Firebase\JWT\JWT;
 
-// get database connection
+// get database connection 
 $database = new Database();
 $db = $database->getConnection();
 
@@ -42,14 +42,15 @@ $visitor = new Visitors($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // get jwt
-$secretKey=isset($data->key) ? $data->key : "";
+$secret=isset($data->secretKey) ? $data->secretKey : "";
 
 // set product property values
 $visitor->user_ip = $data->user_ip;
 $visitor->country = $data->country;
+$visitor->visited = $data->visited;
 $visitor->postedon = $data->postedon;
 
-if($secretKey == $key) {
+if(password_verify($secret, $secretKey)) {
     // create the visitor
     if($visitor->create()){
 
@@ -61,6 +62,7 @@ if($secretKey == $key) {
             "data" => array(
                 "user_ip" => $visitor->user_ip,
                 "country" => $visitor->country,
+                "visited" => $visitor->visited,
                 "postedon" => $visitor->postedon
             )
          );

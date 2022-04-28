@@ -31,55 +31,45 @@ class User{
         empty($this->created_on)) {
             return false;
         }
-
-        $sql = "INSERT INTO $this->table_name (name, testimonials, country, postedon) VALUES (:name, :testimonials, :country, :postedon)";
-            $stmt = $this->DB_con->prepare($sql);
-
-            $data = array(
-                'name' => $this->name,
-                'company' => $this->company,
-                'country' => $this->country,
-                'postedon' => $this->postedon
-            );
      
-        // // insert query
-        // $query = "INSERT INTO " . $this->table_name . "
-        //         SET
-        //             name = :name,
-        //             company = :company,
-        //             phone = :phone,
-        //             email = :email,
-        //             password = :password,
-        //             created_on = :created_on";
+        // insert query
+        $query = "INSERT INTO " . $this->table_name . "
+                SET
+                    name = :name,
+                    company = :company,
+                    phone = :phone,
+                    email = :email,
+                    password = :password,
+                    created_on = :created_on";
      
-        // // prepare the query
-        // $stmt = $this->conn->prepare($query);
+        // prepare the query
+        $stmt = $this->conn->prepare($query);
      
-        // // sanitize
-        // $this->name=htmlspecialchars(strip_tags($this->name));
-        // $this->company=htmlspecialchars(strip_tags($this->company));
-        // $this->phone=htmlspecialchars(strip_tags($this->phone));
-        // $this->email=htmlspecialchars(strip_tags($this->email));
-        // $this->password=htmlspecialchars(strip_tags($this->password));
-        // $this->created_on=htmlspecialchars(strip_tags($this->created_on));
+        // sanitize
+        $this->name=htmlspecialchars(strip_tags($this->name));
+        $this->company=htmlspecialchars(strip_tags($this->company));
+        $this->phone=htmlspecialchars(strip_tags($this->phone));
+        $this->email=htmlspecialchars(strip_tags($this->email));
+        $this->password=htmlspecialchars(strip_tags($this->password));
+        $this->created_on=htmlspecialchars(strip_tags($this->created_on));
      
-        // // bind the values
-        // $stmt->bindParam(':name', $this->name);
-        // $stmt->bindParam(':company', $this->company);
-        // $stmt->bindParam(':phone', $this->phone);
-        // $stmt->bindParam(':email', $this->email);
-        // $stmt->bindParam(':created_on', $this->created_on);
+        // bind the values
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':company', $this->company);
+        $stmt->bindParam(':phone', $this->phone);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':created_on', $this->created_on);
      
-        // // hash the password before saving to database
-        // $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
-        // $stmt->bindParam(':password', $password_hash);
+        // hash the password before saving to database
+        $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
+        $stmt->bindParam(':password', $password_hash);
      
-        // // execute the query, also check if query was successful
-        // if($stmt->execute()){
-        //     return true;
-        // }
+        // execute the query, also check if query was successful
+        if($stmt->execute()){
+            return true;
+        }
      
-        // return false;
+        return false;
     }
          
     // check if given email exist in the database

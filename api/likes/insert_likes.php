@@ -42,14 +42,14 @@ $like = new Likes($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // get jwt
-$secretKey=isset($data->key) ? $data->key : "";
+$secret=isset($data->secretKey) ? $data->secretKey : "";
 
 // set product property values
 $like->user_ip = $data->user_ip;
 $like->country = $data->country;
 $like->postedon = $data->postedon;
 
-if($secretKey == $key) {
+if(password_verify($secret, $secretKey)) {
     // insert the like
     if($like->create()){
 

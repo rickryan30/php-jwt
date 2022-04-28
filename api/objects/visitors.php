@@ -10,6 +10,7 @@ class Visitors{
     public $id;
     public $user_ip;
     public $country;
+    public $visited;
     public $postedon;
  
     // constructor
@@ -22,6 +23,7 @@ class Visitors{
 
         if(empty($this->user_ip) || 
         empty($this->country) ||
+        empty($this->visited) ||
         empty($this->postedon)) {
             return false;
         }
@@ -31,6 +33,7 @@ class Visitors{
                 SET
                     user_ip = :user_ip,
                     country = :country,
+                    visited = :visited,
                     postedon = :postedon";
      
         // prepare the query
@@ -39,11 +42,13 @@ class Visitors{
         // sanitize
         $this->user_ip=htmlspecialchars(strip_tags($this->user_ip));
         $this->country=htmlspecialchars(strip_tags($this->country));
+        $this->visited=htmlspecialchars(strip_tags($this->visited));
         $this->postedon=htmlspecialchars(strip_tags($this->postedon));
      
         // bind the values
         $stmt->bindParam(':user_ip', $this->user_ip);
         $stmt->bindParam(':country', $this->country);
+        $stmt->bindParam(':visited', $this->visited);
         $stmt->bindParam(':postedon', $this->postedon);
      
         // execute the query, also check if query was successful
@@ -88,5 +93,53 @@ class Visitors{
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
        
         return $result;
+    }
+
+    // update a user record
+    public function update(){
+     
+        // // if no posted password, do not update the password
+        // $query = "UPDATE " . $this->table_name . "
+        //         SET
+        //             user_ip = :user_ip,
+        //             country = :country,
+        //             visited = :visited,
+        //             postedon = :postedon
+        //         WHERE id = :id";
+     
+        // // prepare the query
+        // $stmt = $this->conn->prepare($query);
+     
+        // // sanitize
+        // $this->user_ip=htmlspecialchars(strip_tags($this->user_ip));
+        // $this->country=htmlspecialchars(strip_tags($this->country));
+        // $this->visited=htmlspecialchars(strip_tags($this->visited));
+        // $this->postedon=htmlspecialchars(strip_tags($this->postedon));
+     
+        // // bind the values from the form
+        // $stmt->bindParam(':user_ip', $this->user_ip);
+        // $stmt->bindParam(':country', $this->country);
+        // $stmt->bindParam(':visited', $this->visited);
+        // $stmt->bindParam(':postedon', $this->postedon);
+     
+        // // unique ID of record to be edited
+        // $stmt->bindParam(':id', $this->id);
+        
+        $query = "UPDATE $this->table_name SET visited = :visited, postedon = :postedon 
+        WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+
+        $data = array(
+            'id' => $this->id,
+            'visited' => $this->visited,
+            'postedon' => $this->postedon
+        );
+
+        // execute the query
+        if($stmt->execute($data)){
+            return true;
+        }
+      
+        return false;
     }
 }

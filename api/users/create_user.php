@@ -43,7 +43,7 @@ $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // get jwt
-$secretKey=isset($data->key) ? $data->key : "";
+$secret=isset($data->secretKey) ? $data->secretKey : "";
 
 // set product property values
 $user->name = $data->name;
@@ -53,7 +53,7 @@ $user->email = $data->email;
 $user->password = $data->password;
 $user->created_on = date("Y-m-d H:i:s");
 
-// if($secretKey == $key) {
+if(password_verify($secret, $secretKey)) {
     // create the user
     if($user->create()){
 
@@ -96,11 +96,11 @@ $user->created_on = date("Y-m-d H:i:s");
         // display message: unable to create user
         echo json_encode(array("status" => "invalid","message" => "Unable to create user."));
     }
-// } else {
-//     // set response code
-//     http_response_code(400);
+} else {
+    // set response code
+    http_response_code(400);
     
-//     // display message: unable to create user
-//     echo json_encode(array("status" => "invalid","message" => "Missing Token."));
-// }
+    // display message: unable to create user
+    echo json_encode(array("status" => "invalid","message" => "Missing Token."));
+}
 ?>

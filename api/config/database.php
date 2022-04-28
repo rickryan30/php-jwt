@@ -9,10 +9,10 @@ class Database{
 	private $password = "ox1xSzHXsQoCPczKnLdh";
 	public $con;
 
-	// private $host = "databases.000webhost.com";
-	// private $db_name = "id10330233_rickdb";
-	// private $username = "id10330233_portfoliodb";
-	// private $password = ")0h<e{)jFEExPA7l";
+	// private $host = "localhost";
+	// private $db_name = "id17745462_medillorr";
+	// private $username = "root";
+	// private $password = "";
 	// public $con;
 
 	// get the database connection

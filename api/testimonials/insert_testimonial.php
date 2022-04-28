@@ -42,7 +42,7 @@ $testi = new Testimonials($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // get jwt
-$secretKey=isset($data->key) ? $data->key : "";
+$secret=isset($data->secretKey) ? $data->secretKey : "";
 
 // set product property values
 $testi->name = $data->name;
@@ -50,7 +50,7 @@ $testi->testimonials = $data->testimonials;
 $testi->country = $data->country;
 $testi->postedon = $data->postedon;
 
-if($secretKey == $key) {
+if(password_verify($secret, $secretKey)) {
     // insert the $testi
     if($testi->create()){
 

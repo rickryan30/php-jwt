@@ -42,7 +42,7 @@ $reply = new Reply($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // get jwt
-$secretKey=isset($data->key) ? $data->key : "";
+$secret=isset($data->secretKey) ? $data->secretKey : "";
 
 // set product property values
 $reply->tid = $data->tid;
@@ -51,7 +51,7 @@ $reply->reply = $data->reply;
 $reply->country = $data->country;
 $reply->postedon = $data->postedon;
 
-if($secretKey == $key) {
+if(password_verify($secret, $secretKey)) {
     // insert the $reply
     if($reply->create()){
 
