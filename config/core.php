@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 date_default_timezone_set('Asia/Manila');
  
 // variables used for jwt
-$key = "P@ssw0rd";
+$key = "Stimul@t0r";
 $secretKey = "$2y$10$95ZU0.ialtPJlFdPceQ2KeG1TQO57eRzIwx.S7dCyGFFxoqfvEdoy";
 $iss = "http://localhost:8080/Rick-Portfolio-Api-JWT/";
 $aud = "http://localhost:8080/Rick-Portfolio-Api-JWT/";

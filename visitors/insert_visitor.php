@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
  
 // files needed to connect to database
 include_once '../config/database.php';
-include_once '../objects/testimonials.php';
+include_once '../objects/visitors.php';
  
 // generate json web token
 include_once '../config/core.php';
@@ -31,12 +31,12 @@ include_once '../vendor/firebase/php-jwt/src/JWT.php';
 require "../vendor/autoload.php";
 use \Firebase\JWT\JWT;
 
-// get database connection
+// get database connection 
 $database = new Database();
 $db = $database->getConnection();
 
-// instantiate like object
-$testi = new Testimonials($db);
+// instantiate product object
+$visitor = new Visitors($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
@@ -45,14 +45,14 @@ $data = json_decode(file_get_contents("php://input"));
 $secret=isset($data->secretKey) ? $data->secretKey : "";
 
 // set product property values
-$testi->name = $data->name;
-$testi->testimonials = $data->testimonials;
-$testi->country = $data->country;
-$testi->postedon = $data->postedon;
+$visitor->user_ip = $data->user_ip;
+$visitor->country = $data->country;
+$visitor->visited = $data->visited;
+$visitor->postedon = $data->postedon;
 
 if(password_verify($secret, $secretKey)) {
-    // insert the $testi
-    if($testi->create()){
+    // create the visitor
+    if($visitor->create()){
 
         $token = array(
             "iss" => $iss,
@@ -60,10 +60,10 @@ if(password_verify($secret, $secretKey)) {
             "iat" => $iat,
             "nbf" => $nbf,
             "data" => array(
-             "name" => $testi->name,
-             "testimonials" => $testi->testimonials,
-             "country" => $testi->country,
-             "postedon" => $testi->postedon
+                "user_ip" => $visitor->user_ip,
+                "country" => $visitor->country,
+                "visited" => $visitor->visited,
+                "postedon" => $visitor->postedon
             )
          );
          $jwt = JWT::encode($token, $key);
@@ -71,31 +71,30 @@ if(password_verify($secret, $secretKey)) {
         // set response code
         http_response_code(200);
     
-        // display message: $testi was inserted
+        // display message: visitor was created
         echo json_encode(
             array(
-                "data" => $token['data'],
                 'status' => "success",
-                "message" => "Data Inserted.",
+                "message" => "Visitor Inserted",
                 "access_token" => $jwt
             )
         );
     }
     
-    // message if unable to insert $testi
+    // message if unable to create visitor
     else{
     
         // set response code
-        http_response_code(401);
+        http_response_code(400);
     
-        // display message: unable to insert $testi
-        echo json_encode(array("status" => "invalid","message" => "Unable to insert data."));
+        // display message: unable to create visitor
+        echo json_encode(array("status" => "invalid","message" => "Unable to insert visitor."));
     }
 } else {
     // set response code
     http_response_code(400);
     
-    // display message: unable to insert $testi
+    // display message: unable to create visitor
     echo json_encode(array("status" => "invalid","message" => "Missing Token."));
 }
 ?>

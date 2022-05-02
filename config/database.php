@@ -3,17 +3,17 @@
 class Database{
 
 	// specify your own database credentials
-	private $host = "bqlbxtjmwdnzivs07gog-mysql.services.clever-cloud.com";
-	private $db_name = "bqlbxtjmwdnzivs07gog";
-	private $username = "u37qhbkdrkwmbnuw";
-	private $password = "ox1xSzHXsQoCPczKnLdh";
-	public $con;
-
-	// private $host = "localhost";
-	// private $db_name = "id17745462_medillorr";
-	// private $username = "root";
-	// private $password = "";
+	// private $host = "bqlbxtjmwdnzivs07gog-mysql.services.clever-cloud.com";
+	// private $db_name = "bqlbxtjmwdnzivs07gog";
+	// private $username = "u37qhbkdrkwmbnuw";
+	// private $password = "ox1xSzHXsQoCPczKnLdh";
 	// public $con;
+
+	private $host = "localhost";
+	private $db_name = "id17745462_medillorr";
+	private $username = "root";
+	private $password = "";
+	public $con;
 
 	// get the database connection
 	public function getConnection(){

@@ -58,7 +58,7 @@ if($jwt){
 		$user->company = $data->company;
 		$user->phone = $data->phone;
 		$user->email = $data->email;
-		$user->password = $data->password;
+		$user->password = $data->password; 
 		$user->id = $decoded->data->id;
 		 
 		// create the product
