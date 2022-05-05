@@ -105,8 +105,8 @@ if(!empty($like->user_ip)){
     } else {
 
         // set response code - 404 Not found
-	    	http_response_code(404);
-            echo json_encode(array("message" => "No Data."));
+	    	http_response_code(204);
+            echo json_encode(array('status' => "failed","message" => "No Data."));
     }
  
     
