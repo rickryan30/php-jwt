@@ -51,7 +51,7 @@ $reply->reply = $data->reply;
 $reply->country = $data->country;
 $reply->postedon = $data->postedon;
 
-if(password_verify($secret, $secretKey)) {
+if(base64_decode($secret) == $key) {
     // insert the $reply
     if($reply->create()){
 
@@ -76,9 +76,7 @@ if(password_verify($secret, $secretKey)) {
         // display message: $reply was inserted
         echo json_encode(
             array(
-                "data" => $token['data'],
                 'status' => "success",
-                "message" => "Reply Inserted.",
                 "access_token" => $jwt
             )
         );

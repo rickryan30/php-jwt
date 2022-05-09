@@ -45,7 +45,7 @@ $visitor->id = (isset($_GET['id']) && $_GET['id']) ? $_GET['id'] : '0';
 $secret=isset($data->secretKey) ? $data->secretKey : "";
  
 // if jwt is not empty
-if(password_verify($secret, $secretKey)){
+if(base64_decode($secret) == $key) {
  
     // if decode succeed, show user details
     try {
@@ -79,7 +79,6 @@ if(password_verify($secret, $secretKey)){
 			echo json_encode(
 			        array(
 						'status' => "success",
-			            "message" => "User was updated.",
 			            "access_token" => $jwt
 			        )
 			    );

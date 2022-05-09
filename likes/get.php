@@ -60,9 +60,7 @@ if(!empty($like->user_ip)){
         $jwt = JWT::encode($token, $key);
         echo json_encode(
                 array(
-                    "data" => $result,
                     'status' => "success",
-                    "message" => "Visitor already Click Like",
                     "access_token" => $jwt
                 )
             );
@@ -95,10 +93,8 @@ if(!empty($like->user_ip)){
         $jwt = JWT::encode($token, $key);
         echo json_encode(
                 array(
-                    "data" => $result,
                     "count" => $count,
                     'status' => "success",
-                    "message" => "list of Visitors who likes.",
                     "access_token" => $jwt
                 )
             );

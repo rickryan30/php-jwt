@@ -50,7 +50,7 @@ $secret=isset($data->secretKey) ? $data->secretKey : "";
  
 // check if email exists and if password is correct
 
-    if($email_exists && password_verify($data->password, $user->password) && password_verify($secret, $secretKey)){
+    if($email_exists && password_verify($data->password, $user->password) && base64_decode($secret) == $key){
     
         $token = array(
         "key" => $key,
@@ -75,9 +75,7 @@ $secret=isset($data->secretKey) ? $data->secretKey : "";
         $jwt = JWT::encode($token, $key);
         echo json_encode(
                 array(
-                    "data" => $token['data'],
                     'status' => "success",
-                    "message" => "Successful login.",
                     "access_token" => $jwt
                 )
             );

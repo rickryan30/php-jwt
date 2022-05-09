@@ -87,7 +87,6 @@ if($jwt){
 			echo json_encode(
 			        array(
 						'status' => "success",
-			            "message" => "User was updated.",
 			            "access_token" => $jwt
 			        )
 			    );

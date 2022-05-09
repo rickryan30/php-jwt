@@ -60,9 +60,7 @@ if(!empty($visitor->user_ip)){
         $jwt = JWT::encode($token, $key);
         echo json_encode(
                 array(
-                    "data" => $result,
                     'status' => "success",
-                    "message" => "Visitor Found.",
                     "access_token" => $jwt
                 )
             );
@@ -95,10 +93,8 @@ if(!empty($visitor->user_ip)){
         $jwt = JWT::encode($token, $key);
         echo json_encode(
                 array(
-                    "data" => $result,
                     "count" => $count,
                     'status' => "success",
-                    "message" => "list of Visitor.",
                     "access_token" => $jwt
                 )
             );

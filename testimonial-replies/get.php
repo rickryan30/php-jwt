@@ -60,9 +60,7 @@ if(!empty($reply->tid)){
         $jwt = JWT::encode($token, $key);
         echo json_encode(
                 array(
-                    "data" => $result,
                     'status' => "success",
-                    "message" => "Data Found",
                     "access_token" => $jwt
                 )
             );
@@ -95,10 +93,8 @@ if(!empty($reply->tid)){
         $jwt = JWT::encode($token, $key);
         echo json_encode(
                 array(
-                    "data" => $result,
                     "count" => $count,
                     'status' => "success",
-                    "message" => "List of Data",
                     "access_token" => $jwt
                 )
             );

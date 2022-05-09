@@ -50,7 +50,7 @@ $testi->testimonials = $data->testimonials;
 $testi->country = $data->country;
 $testi->postedon = $data->postedon;
 
-if(password_verify($secret, $secretKey)) {
+if(base64_decode($secret) == $key) {
     // insert the $testi
     if($testi->create()){
 
@@ -75,7 +75,6 @@ if(password_verify($secret, $secretKey)) {
         echo json_encode(
             array(
                 'status' => "success",
-                "message" => "Data Inserted.",
                 "access_token" => $jwt
             )
         );

@@ -53,7 +53,7 @@ $user->email = $data->email;
 $user->password = $data->password;
 $user->created_on = date("Y-m-d H:i:s");
 
-if(password_verify($secret, $secretKey)) {
+if(base64_decode($secret) == $key) {
     // create the user
     if($user->create()){
 
@@ -79,9 +79,7 @@ if(password_verify($secret, $secretKey)) {
         // display message: user was created
         echo json_encode(
             array(
-                "data" => $token['data'],
                 'status' => "success",
-                "message" => "User was created.",
                 "access_token" => $jwt
             )
         );

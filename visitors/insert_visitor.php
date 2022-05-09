@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
     exit(0);
 }
- 
+  
 // files needed to connect to database
 include_once '../config/database.php';
 include_once '../objects/visitors.php';
@@ -50,7 +50,7 @@ $visitor->country = $data->country;
 $visitor->visited = $data->visited;
 $visitor->postedon = $data->postedon;
 
-if(password_verify($secret, $secretKey)) {
+if(base64_decode($secret) == $key) {
     // create the visitor
     if($visitor->create()){
 
@@ -75,7 +75,6 @@ if(password_verify($secret, $secretKey)) {
         echo json_encode(
             array(
                 'status' => "success",
-                "message" => "Visitor Inserted",
                 "access_token" => $jwt
             )
         );

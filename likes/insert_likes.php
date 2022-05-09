@@ -49,7 +49,7 @@ $like->user_ip = $data->user_ip;
 $like->country = $data->country;
 $like->postedon = $data->postedon;
 
-if(password_verify($secret, $secretKey)) {
+if(base64_decode($secret) == $key) {
     // insert the like
     if($like->create()){
 
@@ -72,9 +72,7 @@ if(password_verify($secret, $secretKey)) {
         // display message: like was inserted
         echo json_encode(
             array(
-                "data" => $token['data'],
                 'status' => "success",
-                "message" => "Visitor Clicked Inserted.",
                 "access_token" => $jwt
             )
         );

@@ -60,9 +60,7 @@ if(!empty($user->id)){
         $jwt = JWT::encode($token, $key);
         echo json_encode(
                 array(
-                    "data" => $result,
                     'status' => "success",
-                    "message" => "User Found.",
                     "access_token" => $jwt
                 )
             );
@@ -95,16 +93,14 @@ if(!empty($user->id)){
         $jwt = JWT::encode($token, $key);
         echo json_encode(
                 array(
-                    "data" => $result,
                     'status' => "success",
-                    "message" => "list of user.",
                     "access_token" => $jwt
                 )
             );
     } else {
 
         // set response code - 404 Not found
-	    	http_response_code(404);
+	    	http_response_code(204);
             echo json_encode(array("message" => "No Data."));
     }
  
