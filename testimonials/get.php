@@ -67,7 +67,7 @@ if(!empty($testi->id)){
 
     } else {
 		// set response code - 404 Not found
-	    	http_response_code(404);
+	    	http_response_code(204);
         echo json_encode(array("message" => "Data not Found"));
     }
     
